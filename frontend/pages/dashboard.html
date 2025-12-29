@@ -216,8 +216,20 @@
     <div class="grid-2">
 
       <div class="panel">
-        <h3>Fuel Efficiency Trend</h3>
-        <canvas id="mileageChart" height="120"></canvas>
+        <h3>Usage Summary</h3>
+        <p style="font-size:13px; color:#bcbcbc; margin-top:0;">
+          Based on all fuel, service and expense logs for this bike.
+        </p>
+        <div style="display:flex; gap:24px; flex-wrap:wrap; font-size:13px;">
+          <div>
+            <div style="color:#bdbdbd;">Total Distance</div>
+            <div id="dashTotalDistance" style="font-size:18px; font-weight:600;">0 km</div>
+          </div>
+          <div>
+            <div style="color:#bdbdbd;">Overall Cost / km</div>
+            <div id="dashCostPerKm" style="font-size:18px; font-weight:600;">₹ 0</div>
+          </div>
+        </div>
       </div>
 
       <div class="panel">
@@ -226,15 +238,15 @@
         <div id="recentActivity">
           <div class="activity-item">
             <span>Fuel added</span>
-            <span>₹ 0</span>
+            <span id="recentFuel">₹ 0</span>
           </div>
           <div class="activity-item">
             <span>Service</span>
-            <span>₹ 0</span>
+            <span id="recentService">₹ 0</span>
           </div>
           <div class="activity-item">
             <span>Expense</span>
-            <span>₹ 0</span>
+            <span id="recentExpense">₹ 0</span>
           </div>
         </div>
       </div>

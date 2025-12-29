@@ -226,6 +226,9 @@
         // Save auth
         localStorage.setItem("token", data.token);
         localStorage.setItem("userId", data.userId);
+        if (data.name) {
+          localStorage.setItem("userName", data.name);
+        }
 
         // Redirect
         window.location.replace("app.html");

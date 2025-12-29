@@ -27,6 +27,11 @@ async function loadDashboard() {
     const fuelEl = document.getElementById("fuelSpent");
     const serviceEl = document.getElementById("serviceSpent");
     const mileageEl = document.getElementById("avgMileage");
+    const totalDistanceEl = document.getElementById("dashTotalDistance");
+    const costPerKmEl = document.getElementById("dashCostPerKm");
+    const recentFuelEl = document.getElementById("recentFuel");
+    const recentServiceEl = document.getElementById("recentService");
+    const recentExpenseEl = document.getElementById("recentExpense");
 
     try {
         // 2. If no bike is selected, show empty states
@@ -46,12 +51,24 @@ async function loadDashboard() {
         const totalSpent = Number(data.totalSpent ?? 0);
         const fuelSpent = Number(data.fuelSpent ?? 0);
         const serviceSpent = Number(data.serviceSpent ?? 0);
+        const expenseSpent = Number(data.expenseSpent ?? 0);
         const avgMileageVal = data.avgMileage != null ? Number(data.avgMileage) : 0;
+        const totalDistance = Number(data.totalDistance ?? 0);
+        const costPerKm = data.costPerKm != null ? Number(data.costPerKm) : 0;
 
         if (totalEl) totalEl.innerText = `₹ ${totalSpent.toLocaleString()}`;
         if (fuelEl) fuelEl.innerText = `₹ ${fuelSpent.toLocaleString()}`;
         if (serviceEl) serviceEl.innerText = `₹ ${serviceSpent.toLocaleString()}`;
         if (mileageEl) mileageEl.innerText = `${avgMileageVal.toFixed(1)} km/l`;
+
+        // Additional dashboard metrics
+        if (totalDistanceEl) totalDistanceEl.innerText = `${totalDistance.toLocaleString()} km`;
+        if (costPerKmEl) costPerKmEl.innerText = `₹ ${costPerKm.toFixed(2)}`;
+
+        // Recent activity card uses fuel/service/expense breakdown
+        if (recentFuelEl) recentFuelEl.innerText = `₹ ${fuelSpent.toLocaleString()}`;
+        if (recentServiceEl) recentServiceEl.innerText = `₹ ${serviceSpent.toLocaleString()}`;
+        if (recentExpenseEl) recentExpenseEl.innerText = `₹ ${expenseSpent.toLocaleString()}`;
 
     } catch (err) {
         console.error("Dashboard error:", err.message);

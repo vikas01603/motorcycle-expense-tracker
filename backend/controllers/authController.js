@@ -22,10 +22,11 @@ exports.login = async (req, res) => {
   if (!match) return res.status(401).json({ message: "Invalid credentials" });
 
   const token = jwt.sign(
-  { userId: user._id },
-  process.env.JWT_SECRET,
-  { expiresIn: "1d" } // token expires in 1 day
-);
+    { userId: user._id },
+    process.env.JWT_SECRET,
+    { expiresIn: "1d" } // token expires in 1 day
+  );
 
-  res.json({ token, userId: user._id });
+  // Also return name so frontend can show a personalized greeting
+  res.json({ token, userId: user._id, name: user.name });
 };

@@ -27,5 +27,17 @@ exports.getReminders = async (req, res) => {
   res.json(reminders);
 };
 
-// ✅ FIX 2: ALIAS so serviceRoutes.js does not crash
-exports.getServices = exports.getReminders;
+// Return actual service history for the Services page
+exports.getServices = async (req, res) => {
+  const bike = await Bike.findOne({
+    _id: req.params.bikeId,
+    userId: req.userId
+  });
+
+  if (!bike) {
+    return res.status(403).json({ message: "Unauthorized bike access" });
+  }
+
+  const services = await Service.find({ bikeId: bike._id });
+  res.json(services);
+};

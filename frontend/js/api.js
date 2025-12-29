@@ -174,6 +174,7 @@ async function getServices() {
 // ========================================
 async function addRide(rideData) {
     const bikeId = getBikeId();
+    if (!bikeId) throw new Error("No bike selected");
     return apiRequest(`${API_BASE}/rides`, {
         method: "POST",
         headers: authHeaders(),
