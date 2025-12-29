@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Bike</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      margin: 0;
+      background: transparent;
+      font-family: "Inter", sans-serif;
+      color: #f5f5f5;
+      background:
+      linear-gradient(
+        rgba(0,0,0,0.65),
+        rgba(0,0,0,0.85)
+      ),
+      url("../assets/black-leather.jpg");
+
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+    }
+
+    /* PAGE WRAPPER */
+    .page {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 10px 6px 40px;
+    }
+
+    /* HEADER */
+    .page-header {
+      margin-bottom: 24px;
+    }
+
+    .page-header h1 {
+      font-size: 24px;
+      margin: 0;
+      font-weight: 700;
+      color:whitesmoke;
+    }
+
+    .page-header span {
+      font-size: 13px;
+      color: orange;
+    }
+
+    /* BIKE CARD */
+    .bike-card {
+      background: linear-gradient(145deg, #262626, #1a1a1a);
+      border-radius: 18px;
+      padding: 26px;
+      box-shadow:
+        0 20px 35px rgba(0,0,0,0.75),
+        inset 0 1px 0 rgba(255,255,255,0.05);
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 26px;
+      align-items: center;
+    }
+
+    .bike-image {
+      height: 220px;
+      border-radius: 14px;
+      background: linear-gradient(
+        rgba(0,0,0,0.65),
+        rgba(0,0,0,0.85)
+      ),
+      url("../assets/black-leather.jpg");
+
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 56px;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.06);
+    }
+
+    /* BIKE DETAILS */
+    .bike-details h2 {
+      margin: 0 0 6px;
+      font-size: 22px;
+      font-weight: 700;
+    }
+
+    .bike-details .subtitle {
+      font-size: 13px;
+      color: #bdbdbd;
+      margin-bottom: 18px;
+    }
+
+    .bike-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 16px;
+    }
+
+    .info-box {
+      background: linear-gradient(145deg, #141414, #0f0f0f);
+      border-radius: 12px;
+      padding: 14px;
+      font-size: 13px;
+      box-shadow:
+        inset 0 0 0 1px rgba(255,255,255,0.07),
+        0 6px 12px rgba(0,0,0,0.6);
+    }
+
+    .info-box span {
+      display: block;
+      font-size: 11px;
+      color: #bcbcbc;
+      margin-bottom: 6px;
+    }
+
+    /* PANEL */
+    .panel {
+      margin-top: 30px;
+      background: linear-gradient(145deg, #262626, #1a1a1a);
+      border-radius: 18px;
+      padding: 24px;
+      box-shadow:
+        0 18px 30px rgba(0,0,0,0.75),
+        inset 0 1px 0 rgba(255,255,255,0.05);
+    }
+
+    .panel h3 {
+      margin: 0 0 18px;
+      font-size: 16px;
+      font-weight: 600;
+    }
+
+    .bike-form {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 16px;
+    }
+
+    .field label {
+      font-size: 12px;
+      color: #cfcfcf;
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    .field input {
+      width: 100%;
+      padding: 11px 14px;
+      border-radius: 12px;
+      border: none;
+      background: #0f0f0f;
+      color: #f5f5f5;
+      font-size: 13px;
+      outline: none;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.08);
+    }
+
+    .field input:focus {
+      box-shadow: inset 0 0 0 1px #c26a2e;
+    }
+
+    .add-btn {
+      grid-column: 1 / -1;
+      margin-top: 10px;
+      padding: 14px;
+      border-radius: 14px;
+      border: none;
+      font-weight: 600;
+      cursor: pointer;
+      background: linear-gradient(
+      rgba(0,0,0,0.25),
+      rgba(0,0,0,0.45)
+    ),
+    url("../assets/brown-leather.jpg");
+
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+      color: #fff;
+      letter-spacing: 0.3px;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .add-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-strong);
+      filter: brightness(1.08);
+    }
+
+    .add-btn:active {
+      transform: scale(0.98);
+    }
+
+    @media (max-width: 900px) {
+      .bike-card {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="page">
+
+    <div class="page-header">
+      <h1>Bike</h1>
+      <span>Your motorcycle profile & details</span>
+    </div>
+
+    <div class="bike-card">
+      <div class="bike-image">🏍</div>
+
+      <div class="bike-details">
+        <h2 id="bikeName">—</h2>
+        <div class="subtitle" id="bikeModel">—</div>
+
+        <div class="bike-grid">
+          <div class="info-box"><span>Year</span><div id="bikeYear">—</div></div>
+          <div class="info-box"><span>Engine (CC)</span><div id="engineCC">—</div></div>
+          <div class="info-box"><span>Registration</span><div id="regNumber">—</div></div>
+          <div class="info-box"><span>Current Odometer</span><div id="currentOdo">—</div></div>
+          <div class="info-box"><span>Purchase Date</span><div id="purchaseDate">—</div></div>
+          <div class="info-box"><span>Purchase Price</span><div id="purchasePrice">—</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <h3>Add / Update Bike</h3>
+
+      <div class="bike-form">
+        <div class="field"><label>Bike Name</label><input type="text" id="formBikeName"></div>
+        <div class="field"><label>Brand</label><input type="text" id="brand"></div>
+        <div class="field"><label>Model</label><input type="text" id="model"></div>
+        <div class="field"><label>Year</label><input type="number" id="year"></div>
+        <div class="field"><label>Engine CC</label><input type="number" id="engine"></div>
+        <div class="field"><label>Registration No</label><input type="text" id="registration"></div>
+        <div class="field"><label>Purchase Date</label><input type="date" id="purchaseDateInput"></div>
+        <div class="field"><label>Purchase Price (₹)</label><input type="number" id="purchasePriceInput"></div>
+        <div class="field"><label>Current Odometer</label><input type="number" id="currentOdometer"></div>
+
+        <button type="button" class="add-btn" id="saveBikeBtn">Save Bike</button>
+      </div>
+    </div>
+
+  </div>
+</body>
+</html>

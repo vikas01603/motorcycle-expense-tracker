@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Login • Motorcycle Expense Tracker</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* ===== BASE ===== */
+    * {
+      box-sizing: border-box;
+      font-family: "Inter", sans-serif;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background:
+      linear-gradient(
+        rgba(0,0,0,0.65),
+        rgba(0,0,0,0.85)
+      ),
+      url("./assets/black-leather.jpg");
+
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #f5f5f5;
+    }
+
+    /* ===== LOGIN CARD ===== */
+    .login-card {
+      width: 360px;
+      background: linear-gradient(145deg, #262626, #1b1b1b);
+      border-radius: 16px;
+      padding: 38px 34px;
+      box-shadow:
+        0 25px 50px rgba(0,0,0,0.8),
+        inset 0 1px 0 rgba(255,255,255,0.05);
+      position: relative;
+    }
+
+    .login-card::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: 16px;
+      background-image: url("assets/textures/grain.png");
+      opacity: 0.07;
+      pointer-events: none;
+    }
+
+    /* ===== HEADER ===== */
+    .logo {
+      text-align: center;
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: 0.4px;
+    }
+
+    .accent-line {
+      width: 64px;
+      height: 3px;
+      background: linear-gradient(90deg, #c26a2e, #8b4a1d);
+      border-radius: 3px;
+      margin: 12px auto 20px;
+    }
+
+    .subtitle {
+      text-align: center;
+      font-size: 13px;
+      color: #bcbcbc;
+      margin-bottom: 30px;
+    }
+
+    /* ===== INPUTS ===== */
+    .field {
+      margin-bottom: 18px;
+    }
+
+    .field label {
+      display: block;
+      font-size: 12px;
+      margin-bottom: 6px;
+      color: #cfcfcf;
+    }
+
+    .field input {
+      width: 100%;
+      padding: 12px 14px;
+      border-radius: 10px;
+      border: none;
+      outline: none;
+      background: #111;
+      color: #f5f5f5;
+      font-size: 14px;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.08);
+    }
+
+    .field input:focus {
+      box-shadow: inset 0 0 0 1px #c26a2e;
+    }
+
+    /* ===== BUTTON ===== */
+    .login-btn {
+      width: 100%;
+      padding: 13px;
+      border-radius: 12px;
+      border: none;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      background: linear-gradient(
+      rgba(0,0,0,0.25),
+      rgba(0,0,0,0.45)
+    ),
+    url("./assets/brown-leather.jpg");
+
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+      color: #fff;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.6);
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .login-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-strong);
+      filter: brightness(1.08);
+    }
+
+    /* ===== FOOTER ===== */
+    .footer {
+      text-align: center;
+      margin-top: 22px;
+      font-size: 13px;
+      color: #bdbdbd;
+    }
+
+    .footer a {
+      color: #c26a2e;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .error {
+      text-align: center;
+      color: #ff6b6b;
+      font-size: 13px;
+      margin-top: 12px;
+      display: none;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="login-card">
+    <div class="logo">Motorcycle Expense Tracker</div>
+    <div class="accent-line"></div>
+    <div class="subtitle">
+      My personal bike companion
+    </div>
+
+    <div class="field">
+      <label>Email</label>
+      <input type="email" id="email" placeholder="you@example.com" />
+    </div>
+
+    <div class="field">
+      <label>Password</label>
+      <input type="password" id="password" placeholder="••••••••" />
+    </div>
+
+    <button class="login-btn" onclick="login()">Login</button>
+
+    <div class="error" id="errorMsg"></div>
+
+    <div class="footer">
+      New rider?
+      <a href="register.html">Create account</a>
+    </div>
+  </div>
+
+  <!-- ===== LOGIN SCRIPT ===== -->
+  <script>
+    const API_BASE = "http://localhost:5000/api";
+
+    async function login() {
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value.trim();
+      const errorBox = document.getElementById("errorMsg");
+
+      errorBox.style.display = "none";
+
+      if (!email || !password) {
+        errorBox.innerText = "Please enter email and password";
+        errorBox.style.display = "block";
+        return;
+      }
+
+      try {
+        const res = await fetch(`${API_BASE}/auth/login`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email, password })
+        });
+
+        const data = await res.json();
+
+        if (!res.ok) {
+          errorBox.innerText = data.message || "Login failed";
+          errorBox.style.display = "block";
+          return;
+        }
+
+        // Save auth
+        localStorage.setItem("token", data.token);
+        localStorage.setItem("userId", data.userId);
+
+        // Redirect
+        window.location.replace("app.html");
+
+      } catch (err) {
+        errorBox.innerText = "Server not reachable";
+        errorBox.style.display = "block";
+      }
+    }
+  </script>
+
+</body>
+</html>

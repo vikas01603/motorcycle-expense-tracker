@@ -1,0 +1,152 @@
+/* ======================================================
+   RESPONSIVE – SCRAMBLER UI
+   Desktop • Tablet • Mobile
+====================================================== */
+
+/* ===============================
+   LARGE LAPTOPS (≤ 1200px)
+=============================== */
+@media (max-width: 1200px) {
+  .grid-4 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .grid-3 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* ===============================
+   TABLETS (≤ 992px)
+=============================== */
+@media (max-width: 992px) {
+
+  /* Sidebar */
+  .app-container {
+    grid-template-columns: 220px 1fr;
+  }
+
+  .sidebar {
+    padding: 20px 14px;
+  }
+
+  .main {
+    padding: 22px;
+  }
+
+  /* Stats cards */
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* Bike page */
+  .bike-card {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ===============================
+   SMALL TABLETS / LARGE MOBILES (≤ 768px)
+=============================== */
+@media (max-width: 768px) {
+
+  /* App layout */
+  .app-container {
+    grid-template-columns: 1fr;
+  }
+
+  .sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 220px;
+    transform: translateX(-100%);
+    transition: transform 0.25s ease;
+    z-index: 100;
+  }
+
+  .sidebar.open {
+    transform: translateX(0);
+  }
+
+  .main {
+    padding: 18px;
+  }
+
+  /* Topbar */
+  .topbar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  /* Stats cards */
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* Forms */
+  .form-grid,
+  .fuel-form,
+  .expense-form,
+  .service-form,
+  .ride-form,
+  .bike-form {
+    grid-template-columns: 1fr;
+  }
+
+  /* Tables */
+  table {
+    font-size: 12px;
+  }
+
+  th, td {
+    padding: 8px;
+  }
+
+  /* Ride cards */
+  .ride-list {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ===============================
+   MOBILE (≤ 480px)
+=============================== */
+@media (max-width: 480px) {
+
+  /* Headings */
+  .page-header h1 {
+    font-size: 20px;
+  }
+
+  .page-header span {
+    font-size: 12px;
+  }
+
+  /* Buttons */
+  .btn,
+  .add-btn {
+    width: 100%;
+    padding: 14px;
+  }
+
+  /* Sidebar logo */
+  .sidebar .logo {
+    font-size: 18px;
+  }
+
+  /* Cards */
+  .card,
+  .panel,
+  .stat-card {
+    padding: 14px;
+  }
+
+  /* User pill */
+  .user-pill {
+    font-size: 12px;
+    padding: 6px 12px;
+  }
+}

@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Register • Motorcycle Expense Tracker</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* ===== BASE ===== */
+    * {
+      box-sizing: border-box;
+      font-family: "Inter", sans-serif;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background:
+      linear-gradient(
+        rgba(0,0,0,0.65),
+        rgba(0,0,0,0.85)
+      ),
+      url("./assets/black-leather.jpg");
+
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #f5f5f5;
+    }
+
+    /* ===== REGISTER CARD ===== */
+    .register-card {
+      width: 380px;
+      background: linear-gradient(145deg, #262626, #1b1b1b);
+      border-radius: 16px;
+      padding: 38px 34px;
+      box-shadow:
+        0 25px 50px rgba(0,0,0,0.8),
+        inset 0 1px 0 rgba(255,255,255,0.05);
+      position: relative;
+    }
+
+    .register-card::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: 16px;
+      background-image: url("assets/textures/grain.png");
+      opacity: 0.07;
+      pointer-events: none;
+    }
+
+    /* ===== HEADER ===== */
+    .logo {
+      text-align: center;
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: 0.4px;
+    }
+
+    .accent-line {
+      width: 64px;
+      height: 3px;
+      background: linear-gradient(90deg, #c26a2e, #8b4a1d);
+      border-radius: 3px;
+      margin: 12px auto 20px;
+    }
+
+    .subtitle {
+      text-align: center;
+      font-size: 13px;
+      color: #bcbcbc;
+      margin-bottom: 28px;
+    }
+
+    /* ===== INPUTS ===== */
+    .field {
+      margin-bottom: 16px;
+    }
+
+    .field label {
+      display: block;
+      font-size: 12px;
+      margin-bottom: 6px;
+      color: #cfcfcf;
+    }
+
+    .field input {
+      width: 100%;
+      padding: 12px 14px;
+      border-radius: 10px;
+      border: none;
+      outline: none;
+      background: #111;
+      color: #f5f5f5;
+      font-size: 14px;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.08);
+    }
+
+    .field input:focus {
+      box-shadow: inset 0 0 0 1px #c26a2e;
+    }
+
+    /* ===== BUTTON ===== */
+    .register-btn {
+      width: 100%;
+      padding: 13px;
+      margin-top: 6px;
+      border-radius: 12px;
+      border: none;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      background: linear-gradient(
+      rgba(0,0,0,0.25),
+      rgba(0,0,0,0.45)
+    ),
+    url("./assets/brown-leather.jpg");
+
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+      color: #fff;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.6);
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .register-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-strong);
+      filter: brightness(1.08);
+    }
+
+    /* ===== FOOTER ===== */
+    .footer {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 13px;
+      color: #bdbdbd;
+    }
+
+    .footer a {
+      color: #c26a2e;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .error {
+      text-align: center;
+      color: #ff6b6b;
+      font-size: 13px;
+      margin-top: 12px;
+      display: none;
+    }
+
+    .success {
+      text-align: center;
+      color: #6bff95;
+      font-size: 13px;
+      margin-top: 12px;
+      display: none;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="register-card">
+    <div class="logo">Motorcycle Expense Tracker</div>
+    <div class="accent-line"></div>
+    <div class="subtitle">
+      Create your Scrambler companion account
+    </div>
+
+    <div class="field">
+      <label>Full Name</label>
+      <input type="text" id="name" placeholder="Vikas" />
+    </div>
+
+    <div class="field">
+      <label>Email</label>
+      <input type="email" id="email" placeholder="you@example.com" />
+    </div>
+
+    <div class="field">
+      <label>Password</label>
+      <input type="password" id="password" placeholder="Minimum 6 characters" />
+    </div>
+
+    <button class="register-btn" onclick="registerUser()">Create Account</button>
+
+    <div class="error" id="errorMsg"></div>
+    <div class="success" id="successMsg"></div>
+
+    <div class="footer">
+      Already have an account?
+      <a href="login.html">Login</a>
+    </div>
+  </div>
+
+  <!-- ===== REGISTER SCRIPT ===== -->
+  <script>
+    const API_BASE = "http://localhost:5000/api";
+
+    async function registerUser() {
+      const name = document.getElementById("name").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value.trim();
+
+      const errorBox = document.getElementById("errorMsg");
+      const successBox = document.getElementById("successMsg");
+
+      errorBox.style.display = "none";
+      successBox.style.display = "none";
+
+      if (!name || !email || !password) {
+        errorBox.innerText = "All fields are required";
+        errorBox.style.display = "block";
+        return;
+      }
+
+      if (password.length < 6) {
+        errorBox.innerText = "Password must be at least 6 characters";
+        errorBox.style.display = "block";
+        return;
+      }
+
+      try {
+        const res = await fetch(`${API_BASE}/auth/register`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ name, email, password })
+        });
+
+        const data = await res.json();
+
+        if (!res.ok) {
+          errorBox.innerText = data.message || "Registration failed";
+          errorBox.style.display = "block";
+          return;
+        }
+
+        successBox.innerText = "Account created successfully! Redirecting…";
+        successBox.style.display = "block";
+
+        setTimeout(() => {
+          window.location.replace("login.html");
+        }, 1200);
+
+      } catch (err) {
+        errorBox.innerText = "Server not reachable";
+        errorBox.style.display = "block";
+      }
+    }
+  </script>
+
+</body>
+</html>

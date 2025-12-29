@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Rides</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: "Inter", sans-serif;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: #f5f5f5;
+      background:
+        linear-gradient(rgba(0,0,0,0.65), rgba(0,0,0,0.85)),
+        url("../assets/black-leather.jpg");
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      padding: 6px;
+    }
+
+    /* =========================
+       PAGE WRAPPER
+    ========================= */
+    .page {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 12px;
+    }
+
+    /* =========================
+       HEADER
+    ========================= */
+    .page-header {
+      margin-bottom: 22px;
+    }
+
+    .page-header h1 {
+      font-size: 22px;
+      margin: 0;
+      font-weight: 700;
+    }
+
+    .page-header span {
+      font-size: 13px;
+      color: #bcbcbc;
+    }
+
+    /* =========================
+       STATS
+    ========================= */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .stat-card {
+      background: linear-gradient(145deg, #262626, #1a1a1a);
+      border-radius: 14px;
+      padding: 18px;
+      box-shadow:
+        0 12px 25px rgba(0,0,0,0.7),
+        inset 0 1px 0 rgba(255,255,255,0.04);
+    }
+
+    .stat-title {
+      font-size: 13px;
+      color: #bdbdbd;
+      margin-bottom: 6px;
+    }
+
+    .stat-value {
+      font-size: 22px;
+      font-weight: 700;
+    }
+
+    /* =========================
+       PANEL
+    ========================= */
+    .panel {
+      margin-bottom: 24px;
+      background: linear-gradient(145deg, #262626, #1a1a1a);
+      border-radius: 14px;
+      padding: 20px;
+      box-shadow:
+        0 12px 25px rgba(0,0,0,0.7),
+        inset 0 1px 0 rgba(255,255,255,0.04);
+    }
+
+    .panel h3 {
+      margin: 0 0 16px;
+      font-size: 15px;
+      font-weight: 600;
+    }
+
+    /* =========================
+       FORM
+    ========================= */
+    .ride-form {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 14px;
+    }
+
+    .field label {
+      font-size: 12px;
+      color: #cfcfcf;
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    .field input,
+    .field select {
+      width: 100%;
+      padding: 10px 12px;
+      border-radius: 10px;
+      border: none;
+      background: #111;
+      color: #f5f5f5;
+      font-size: 13px;
+      outline: none;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.08);
+    }
+
+    .field input:focus,
+    .field select:focus {
+      box-shadow: inset 0 0 0 1px #c26a2e;
+    }
+
+    .add-btn {
+      grid-column: 1 / -1;
+      margin-top: 10px;
+      padding: 13px;
+      border-radius: 12px;
+      border: none;
+      font-weight: 600;
+      cursor: pointer;
+      background: linear-gradient(
+      rgba(0,0,0,0.25),
+      rgba(0,0,0,0.45)
+    ),
+    url("../assets/brown-leather.jpg");
+
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+      color: #fff;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .add-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-strong);
+      filter: brightness(1.08);
+    }
+
+    /* =========================
+       RIDE CARDS
+    ========================= */
+    .ride-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 16px;
+    }
+
+    .ride-card {
+      background: linear-gradient(145deg, #262626, #1a1a1a);
+      border-radius: 14px;
+      padding: 16px;
+      box-shadow:
+        0 12px 25px rgba(0,0,0,0.7),
+        inset 0 1px 0 rgba(255,255,255,0.04);
+      transition: transform 0.15s ease;
+    }
+
+    .ride-card:hover {
+      transform: translateY(-2px);
+    }
+
+    .ride-card h4 {
+      margin: 0 0 4px;
+      font-size: 15px;
+      font-weight: 600;
+    }
+
+    .ride-meta {
+      font-size: 12px;
+      color: #bdbdbd;
+      margin-bottom: 10px;
+    }
+
+    .ride-stats {
+      display: flex;
+      justify-content: space-between;
+      font-size: 13px;
+      color: #cfcfcf;
+    }
+
+    .tag {
+      padding: 4px 10px;
+      border-radius: 8px;
+      font-size: 11px;
+      font-weight: 600;
+      display: inline-block;
+      margin-top: 10px;
+      width: fit-content;
+    }
+
+    .city {
+      background: rgba(76,175,80,0.18);
+      color: #6bff95;
+    }
+
+    .highway {
+      background: rgba(33,150,243,0.18);
+      color: #6bbcff;
+    }
+
+    .offroad {
+      background: rgba(255,152,0,0.18);
+      color: #ffb74d;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="page">
+
+    <!-- HEADER -->
+    <div class="page-header">
+      <h1>Rides</h1>
+      <span>Log trips, distances & riding patterns</span>
+    </div>
+
+    <!-- STATS -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-title">Total Distance</div>
+        <div class="stat-value" id="totalDistance">0 km</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-title">Total Rides</div>
+        <div class="stat-value" id="totalRides">0</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-title">Longest Ride</div>
+        <div class="stat-value" id="longestRide">0 km</div>
+      </div>
+    </div>
+
+    <!-- ADD RIDE -->
+    <div class="panel">
+      <h3>Add Ride</h3>
+
+      <div class="ride-form">
+        <div class="field">
+          <label>Ride Name</label>
+          <input type="text" id="rideName" placeholder="Sunday highway run">
+        </div>
+
+        <div class="field">
+          <label>Date</label>
+          <input type="date" id="rideDate">
+        </div>
+
+        <div class="field">
+          <label>Start Odometer</label>
+          <input type="number" id="startOdo">
+        </div>
+
+        <div class="field">
+          <label>End Odometer</label>
+          <input type="number" id="endOdo">
+        </div>
+
+        <div class="field">
+          <label>Ride Type</label>
+          <select id="rideType">
+            <option value="City">City</option>
+            <option value="Highway">Highway</option>
+            <option value="Offroad">Offroad</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label>Notes</label>
+          <input type="text" id="notes" placeholder="Traffic / rain / smooth ride">
+        </div>
+
+        <button type="button" class="add-btn" id="addRideBtn">Add Ride</button>
+      </div>
+    </div>
+
+    <!-- RIDE HISTORY -->
+    <div class="panel">
+      <h3>Ride History</h3>
+
+      <div class="ride-list" id="rideList">
+        <!-- Filled by rides.js -->
+      </div>
+    </div>
+
+  </div>
+
+</body>
+</html>

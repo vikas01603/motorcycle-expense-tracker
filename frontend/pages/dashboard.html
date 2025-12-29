@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: "Inter", sans-serif;
+      color: #f5f5f5;
+      background:
+        linear-gradient(rgba(0,0,0,0.65), rgba(0,0,0,0.85)),
+        url("../assets/black-leather.jpg");
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+    }
+
+    /* =========================
+       MAIN CONTAINER
+    ========================= */
+    .app-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 28px 22px 40px;
+    }
+
+    /* =========================
+       HEADER
+    ========================= */
+    .page-header {
+      margin-bottom: 28px;
+    }
+
+    .page-header h1 {
+      font-size: 26px;
+      margin: 0;
+      font-weight: 700;
+      letter-spacing: 0.4px;
+    }
+
+    .page-header span {
+      display: block;
+      margin-top: 6px;
+      font-size: 14px;
+      color: #bcbcbc;
+    }
+
+    /* =========================
+       STATS GRID
+    ========================= */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+      margin-top: 10px;
+    }
+
+    .stat-card {
+      background: linear-gradient(145deg, #262626, #1a1a1a);
+      border-radius: 14px;
+      padding: 18px;
+      box-shadow:
+        0 12px 25px rgba(0,0,0,0.7),
+        inset 0 1px 0 rgba(255,255,255,0.04);
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .stat-card:hover {
+      transform: translateY(-4px);
+      box-shadow:
+        0 18px 35px rgba(0,0,0,0.8),
+        inset 0 1px 0 rgba(255,255,255,0.06);
+    }
+
+    .stat-card::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image: url("../assets/textures/grain.png");
+      opacity: 0.06;
+      pointer-events: none;
+    }
+
+    .stat-title {
+      font-size: 13px;
+      color: #bdbdbd;
+      margin-bottom: 8px;
+    }
+
+    .stat-value {
+      font-size: 26px;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .accent {
+      height: 3px;
+      width: 46px;
+      background: linear-gradient(90deg, #c26a2e, #8b4a1d);
+      border-radius: 3px;
+      margin-top: 10px;
+    }
+
+    /* =========================
+       CHART + ACTIVITY
+    ========================= */
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 18px;
+      margin-top: 28px;
+    }
+
+    .panel {
+      background: linear-gradient(145deg, #262626, #1a1a1a);
+      border-radius: 14px;
+      padding: 18px;
+      box-shadow:
+        0 12px 25px rgba(0,0,0,0.7),
+        inset 0 1px 0 rgba(255,255,255,0.04);
+      transition: transform 0.25s ease;
+    }
+
+    .panel:hover {
+      transform: translateY(-2px);
+    }
+
+    .panel h3 {
+      margin: 0 0 14px;
+      font-size: 15px;
+      font-weight: 600;
+    }
+
+    .activity-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 13px;
+      padding: 10px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      color: #cfcfcf;
+    }
+
+    .activity-item:last-child {
+      border-bottom: none;
+    }
+
+    /* =========================
+       RESPONSIVE
+    ========================= */
+    @media (max-width: 900px) {
+      .grid-2 {
+        grid-template-columns: 1fr;
+      }
+
+      .page-header h1 {
+        font-size: 22px;
+      }
+
+      .stat-value {
+        font-size: 22px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="app-container">
+
+    <!-- HEADER -->
+    <div class="page-header">
+      <h1>Dashboard</h1>
+      <span>Overview of your motorcycle expenses & health</span>
+    </div>
+
+    <!-- STATS -->
+    <div class="stats-grid">
+
+      <div class="stat-card">
+        <div class="stat-title">Total Spent</div>
+        <div class="stat-value" id="totalSpent">₹ 0</div>
+        <div class="accent"></div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-title">Fuel Cost</div>
+        <div class="stat-value" id="fuelSpent">₹ 0</div>
+        <div class="accent"></div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-title">Service Cost</div>
+        <div class="stat-value" id="serviceSpent">₹ 0</div>
+        <div class="accent"></div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-title">Avg Mileage</div>
+        <div class="stat-value" id="avgMileage">0 km/l</div>
+        <div class="accent"></div>
+      </div>
+
+    </div>
+
+    <!-- CHART + ACTIVITY -->
+    <div class="grid-2">
+
+      <div class="panel">
+        <h3>Fuel Efficiency Trend</h3>
+        <canvas id="mileageChart" height="120"></canvas>
+      </div>
+
+      <div class="panel">
+        <h3>Recent Activity</h3>
+
+        <div id="recentActivity">
+          <div class="activity-item">
+            <span>Fuel added</span>
+            <span>₹ 0</span>
+          </div>
+          <div class="activity-item">
+            <span>Service</span>
+            <span>₹ 0</span>
+          </div>
+          <div class="activity-item">
+            <span>Expense</span>
+            <span>₹ 0</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+</body>
+</html>

@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Services</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: "Inter", sans-serif;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: #f5f5f5;
+      background:
+        linear-gradient(rgba(0,0,0,0.65), rgba(0,0,0,0.85)),
+        url("../assets/black-leather.jpg");
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      padding: 6px;
+    }
+
+    /* =========================
+       PAGE WRAPPER
+    ========================= */
+    .page {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 12px;
+    }
+
+    /* =========================
+       HEADER
+    ========================= */
+    .page-header {
+      margin-bottom: 22px;
+    }
+
+    .page-header h1 {
+      font-size: 22px;
+      margin: 0;
+      font-weight: 700;
+    }
+
+    .page-header span {
+      font-size: 13px;
+      color: #bcbcbc;
+    }
+
+    /* =========================
+       STATS
+    ========================= */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .stat-card {
+      background: linear-gradient(145deg, #262626, #1a1a1a);
+      border-radius: 14px;
+      padding: 18px;
+      box-shadow:
+        0 12px 25px rgba(0,0,0,0.7),
+        inset 0 1px 0 rgba(255,255,255,0.04);
+    }
+
+    .stat-title {
+      font-size: 13px;
+      color: #bdbdbd;
+      margin-bottom: 6px;
+    }
+
+    .stat-value {
+      font-size: 22px;
+      font-weight: 700;
+    }
+
+    /* =========================
+       PANEL
+    ========================= */
+    .panel {
+      margin-bottom: 24px;
+      background: linear-gradient(145deg, #262626, #1a1a1a);
+      border-radius: 14px;
+      padding: 20px;
+      box-shadow:
+        0 12px 25px rgba(0,0,0,0.7),
+        inset 0 1px 0 rgba(255,255,255,0.04);
+    }
+
+    .panel h3 {
+      margin: 0 0 16px;
+      font-size: 15px;
+      font-weight: 600;
+    }
+
+    /* =========================
+       FORM
+    ========================= */
+    .service-form {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 14px;
+    }
+
+    .field label {
+      font-size: 12px;
+      color: #cfcfcf;
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    .field input,
+    .field select {
+      width: 100%;
+      padding: 10px 12px;
+      border-radius: 10px;
+      border: none;
+      background: #111;
+      color: #f5f5f5;
+      font-size: 13px;
+      outline: none;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.08);
+    }
+
+    .field input:focus,
+    .field select:focus {
+      box-shadow: inset 0 0 0 1px #c26a2e;
+    }
+
+    .add-btn {
+      grid-column: 1 / -1;
+      margin-top: 10px;
+      padding: 13px;
+      border-radius: 12px;
+      border: none;
+      font-weight: 600;
+      cursor: pointer;
+      background: linear-gradient(
+      rgba(0,0,0,0.25),
+      rgba(0,0,0,0.45)
+    ),
+    url("../assets/brown-leather.jpg");
+
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+      color: #fff;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .add-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-strong);
+      filter: brightness(1.08);
+    }
+
+    /* =========================
+       TABLE
+    ========================= */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+
+    th, td {
+      padding: 11px 10px;
+      text-align: left;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+
+    th {
+      color: #bdbdbd;
+      font-weight: 600;
+    }
+
+    tr:hover {
+      background: rgba(255,255,255,0.03);
+    }
+
+    /* =========================
+       TAGS
+    ========================= */
+    .tag {
+      padding: 4px 10px;
+      border-radius: 8px;
+      font-size: 11px;
+      font-weight: 600;
+      display: inline-block;
+    }
+
+    .minor {
+      background: rgba(76,175,80,0.18);
+      color: #6bff95;
+    }
+
+    .major {
+      background: rgba(255,82,82,0.18);
+      color: #ff6b6b;
+    }
+
+    @media (max-width: 768px) {
+      table {
+        font-size: 12px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="page">
+
+    <!-- HEADER -->
+    <div class="page-header">
+      <h1>Services</h1>
+      <span>Track maintenance, repairs & service intervals</span>
+    </div>
+
+    <!-- STATS -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-title">Total Service Cost</div>
+        <div class="stat-value" id="totalServiceCost">₹ 0</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-title">Last Service</div>
+        <div class="stat-value" id="lastService">—</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-title">Next Service Due</div>
+        <div class="stat-value" id="nextService">—</div>
+      </div>
+    </div>
+
+    <!-- ADD SERVICE -->
+    <div class="panel">
+      <h3>Add Service</h3>
+
+      <div class="service-form">
+        <div class="field">
+          <label>Service Date</label>
+          <input type="date" id="serviceDate">
+        </div>
+
+        <div class="field">
+          <label>Service Type</label>
+          <select id="serviceType">
+            <option value="Minor">Minor</option>
+            <option value="Major">Major</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label>Odometer (km)</label>
+          <input type="number" id="odometer">
+        </div>
+
+        <div class="field">
+          <label>Total Cost (₹)</label>
+          <input type="number" id="serviceCost">
+        </div>
+
+        <div class="field">
+          <label>Service Center</label>
+          <input type="text" id="serviceCenter" placeholder="Authorized / Local">
+        </div>
+
+        <button type="button" class="add-btn" id="addServiceBtn">Add Service</button>
+      </div>
+    </div>
+
+    <!-- SERVICE HISTORY -->
+    <div class="panel">
+      <h3>Service History</h3>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Type</th>
+            <th>Odometer</th>
+            <th>Cost</th>
+            <th>Service Center</th>
+          </tr>
+        </thead>
+        <tbody id="serviceTable">
+          <!-- Filled by services.js -->
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+
+</body>
+</html>
