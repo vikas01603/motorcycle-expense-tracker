@@ -76,11 +76,12 @@ async function addExpenseEntry(e) {
 
     // Input elements
     const dateEl = document.getElementById("expenseDate");
-    const catEl = document.getElementById("expenseCategory");
-    const subCatEl = document.getElementById("expenseSubCategory");
-    const amountEl = document.getElementById("expenseAmount");
-    const odoEl = document.getElementById("expenseOdo");
-    const descEl = document.getElementById("expenseDesc");
+    // match IDs defined in pages/expenses.html
+    const catEl = document.getElementById("category");
+    const subCatEl = document.getElementById("description");
+    const amountEl = document.getElementById("amount");
+    const odoEl = document.getElementById("odometer");
+    const descEl = document.getElementById("description");
     const btn = document.getElementById("addExpenseBtn");
 
     // Validation

@@ -12,6 +12,10 @@ function getToken() {
     return localStorage.getItem("token");
 }
 
+function getUserId() {
+    return localStorage.getItem("userId");
+}
+
 function getBikeId() {
     return localStorage.getItem("bikeId");
 }
@@ -73,16 +77,19 @@ async function registerUser(name, email, password) {
 // BIKE APIs
 // ========================================
 async function getUserBikes() {
-    return apiRequest(`${API_BASE}/bikes`, {
+    const userId = getUserId() || "me"; // backend ignores the param and uses JWT userId
+    return apiRequest(`${API_BASE}/bikes/${userId}`, {
         headers: authHeaders()
     });
 }
 
 async function addBike(bikeData) {
+    const userId = getUserId();
     return apiRequest(`${API_BASE}/bikes`, {
         method: "POST",
         headers: authHeaders(),
-        body: JSON.stringify(bikeData)
+        // backend expects userId in the body and attaches it to the bike
+        body: JSON.stringify({ ...bikeData, userId })
     });
 }
 

@@ -85,9 +85,10 @@ async function addFuel(e) {
 
     // Get Inputs
     const dateInput = document.getElementById("fuelDate");
-    const odoInput = document.getElementById("fuelOdo");
+    // match IDs defined in pages/fuel.html
+    const odoInput = document.getElementById("odometer");
     const qtyInput = document.getElementById("fuelQty");
-    const priceInput = document.getElementById("fuelPrice");
+    const priceInput = document.getElementById("pricePerLitre");
     const btn = document.getElementById("addFuelBtn");
 
     if (!dateInput.value || !odoInput.value || !qtyInput.value || !priceInput.value) {
