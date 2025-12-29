@@ -18,8 +18,6 @@ function checkAuth() {
 // ========================================
 async function loadBike() {
     try {
-        const bikes = await getUserBikes();
-
         // Reset UI to safe defaults (no junk values)
         const resetText = (id, value) => {
             const el = document.getElementById(id);
@@ -48,12 +46,15 @@ async function loadBike() {
         setValue("purchaseDateInput", "");
         setValue("purchasePriceInput", "0");
         setValue("currentOdometer", "0");
-n        // If no bikes exist yet, keep defaults and let user fill the form
+
+        // After resetting UI, try to fetch bikes for this user
+        const bikes = await getUserBikes();
+
+        // If no bikes exist yet, keep defaults and let user fill the form
         if (!bikes || bikes.length === 0) {
             console.log("No bikes found for this user.");
             return;
         }
-
         // For now, we default to the first bike
         // In the future, you could let users switch between bikes
         const bike = bikes[0];
@@ -142,7 +143,12 @@ async function saveBike(e) {
             btn.innerText = "Saving...";
         }
 
-        await addBike(bikeData);
+        // Call API to create bike; use response to update bikeId immediately
+        const createdBike = await addBike(bikeData);
+        if (createdBike && createdBike._id) {
+            localStorage.setItem("bikeId", createdBike._id);
+        }
+
         alert("Bike added successfully!");
 
         // Refresh the display
