@@ -42,12 +42,16 @@ async function loadDashboard() {
         // 3. Fetch data from API (uses getDashboardData from your API wrapper)
         const data = await getDashboardData();
 
-        // 4. Update Stats with Nullish Coalescing (??) for safety
-        // We use Math.round or .toFixed(2) to keep the UI clean
-        if (totalEl) totalEl.innerText = `₹ ${Number(data.totalSpent ?? 0).toLocaleString()}`;
-        if (fuelEl) fuelEl.innerText = `₹ ${Number(data.fuelSpent ?? 0).toLocaleString()}`;
-        if (serviceEl) serviceEl.innerText = `₹ ${Number(data.serviceSpent ?? 0).toLocaleString()}`;
-        if (mileageEl) mileageEl.innerText = `${(data.avgMileage ?? 0).toFixed(1)} km/l`;
+        // 4. Update Stats with safe number conversion
+        const totalSpent = Number(data.totalSpent ?? 0);
+        const fuelSpent = Number(data.fuelSpent ?? 0);
+        const serviceSpent = Number(data.serviceSpent ?? 0);
+        const avgMileageVal = data.avgMileage != null ? Number(data.avgMileage) : 0;
+
+        if (totalEl) totalEl.innerText = `₹ ${totalSpent.toLocaleString()}`;
+        if (fuelEl) fuelEl.innerText = `₹ ${fuelSpent.toLocaleString()}`;
+        if (serviceEl) serviceEl.innerText = `₹ ${serviceSpent.toLocaleString()}`;
+        if (mileageEl) mileageEl.innerText = `${avgMileageVal.toFixed(1)} km/l`;
 
     } catch (err) {
         console.error("Dashboard error:", err.message);

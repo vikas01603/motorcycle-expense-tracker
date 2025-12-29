@@ -16,6 +16,15 @@ async function loadExpenses() {
     const table = document.getElementById("expenseTable");
     if (!table) return;
 
+    const totalEl = document.getElementById("totalExpenses");
+    const monthlyEl = document.getElementById("monthlyExpenses");
+    const highestEl = document.getElementById("highestExpense");
+
+    // Safe defaults for top stats
+    if (totalEl) totalEl.innerText = "₹ 0";
+    if (monthlyEl) monthlyEl.innerText = "₹ 0";
+    if (highestEl) highestEl.innerText = "₹ 0";
+
     const bikeId = getActiveBike();
     if (!bikeId) {
         table.innerHTML = `<tr><td colspan="6" style="text-align:center;">Please select a bike first.</td></tr>`;
@@ -41,20 +50,42 @@ async function loadExpenses() {
         // Sort: Newest expenses at the top
         const sortedExpenses = expenses.sort((a, b) => new Date(b.date) - new Date(a.date));
 
+        let total = 0;
+        let monthlyTotal = 0;
+        let highest = 0;
+        const now = new Date();
+        const currentMonth = now.getMonth();
+        const currentYear = now.getFullYear();
+
         sortedExpenses.forEach(exp => {
             const row = document.createElement("tr");
+
+            const amountNum = Number(exp.amount || 0);
+            total += amountNum;
+            if (amountNum > highest) highest = amountNum;
+
+            if (exp.date) {
+                const d = new Date(exp.date);
+                if (d.getMonth() === currentMonth && d.getFullYear() === currentYear) {
+                    monthlyTotal += amountNum;
+                }
+            }
 
             row.innerHTML = `
                 <td>${new Date(exp.date).toLocaleDateString('en-IN')}</td>
                 <td><span class="category-tag">${exp.category}</span></td>
                 <td>${exp.subCategory || "—"}</td>
                 <td>${exp.odometer ? exp.odometer.toLocaleString() + " km" : "—"}</td>
-                <td><strong>₹ ${Number(exp.amount).toLocaleString('en-IN')}</strong></td>
+                <td><strong>₹ ${amountNum.toLocaleString('en-IN')}</strong></td>
                 <td class="text-muted small">${exp.description || "—"}</td>
             `;
 
             table.appendChild(row);
         });
+
+        if (totalEl) totalEl.innerText = `₹ ${total.toLocaleString('en-IN')}`;
+        if (monthlyEl) monthlyEl.innerText = `₹ ${monthlyTotal.toLocaleString('en-IN')}`;
+        if (highestEl) highestEl.innerText = `₹ ${highest.toLocaleString('en-IN')}`;
 
     } catch (err) {
         console.error("Expense load error:", err.message);

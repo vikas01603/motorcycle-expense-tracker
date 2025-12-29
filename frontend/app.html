@@ -220,7 +220,8 @@
     }
 
     window.onload = () => {
-      const userName = localStorage.getItem("userName") || "Vikas";
+      const storedName = localStorage.getItem("userName");
+      const userName = storedName && storedName.trim() ? storedName : "Rider";
       document.getElementById("welcomeText").innerText = "Welcome, " + userName;
     };
   </script>
